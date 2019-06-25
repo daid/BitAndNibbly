@@ -1,0 +1,58 @@
+{
+    color: #FFFFFF
+    font: gui/theme/Boxy-Bold.ttf
+    size: 15
+	image: gui/theme/pixel.png
+    [label] {
+        [label.black] {
+            color: #000000
+        }
+    }
+    [textfield] {
+    }
+    [textarea] {
+    }
+    [button.background] {
+        image: gui/theme/pixel.png
+        image.hovered: gui/theme/square.png
+    }
+    [button.forground] {
+        color: #000000
+        color.hovered: #FFFFFF
+    }
+    [togglebutton.on.background] {
+        image: gui/theme/pixel.png
+        image.hovered: gui/theme/square.png
+    }
+    [togglebutton.on.forground] {
+        color: #000000
+        color.hovered: #FFFFFF
+    }
+    [togglebutton.off.background] {
+        image.hovered: gui/theme/pixel.png
+        image: gui/theme/square.png
+    }
+    [togglebutton.off.forground] {
+        color.hovered: #000000
+        color: #FFFFFF
+    }
+    [panel] {
+        image: gui/theme/square.png
+		color: #FFFFFF80
+		size: 8
+    }
+    [slider.forground] {
+		color: #FFFFFF
+    }
+    [slider.background] {
+		color: #FFFFFF40
+    }
+    [progressbar.forground] {
+    }
+    [progressbar.background] {
+        color: #FFFFFF40
+    }
+    [image] {
+    }
+}
+

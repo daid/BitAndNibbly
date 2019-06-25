@@ -1,0 +1,19 @@
+{
+    texture: portal.png
+    texture_size: 128, 16
+
+    size: 1, 1
+    frame_size: 16, 16
+    loop: false
+
+    delay: 0.07
+    [Closed] {
+        frames: 0
+    }
+    [Opening] {
+        frames: 0, 1, 2, 3, 4
+    }
+    [Open] {
+        frames: 4
+    }
+}
