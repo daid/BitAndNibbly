@@ -85,9 +85,9 @@ void ScriptableObject::onRegisterScriptBindings(sp::ScriptBindingClass& script_b
     
     script_binding_class.bindProperty("position", &sp::Node::getPosition2D, &sp::Node::setPosition);
     script_binding_class.bind("setTile", &ScriptableObject::setTile);
-    script_binding_class.bind("setCollision", setCollision);
-    script_binding_class.bind("setCollisionSolid", setCollisionSolid);
-    script_binding_class.bind("setCollisionPlatform", setCollisionPlatform);
+    script_binding_class.bind("setCollision", &ScriptableObject::setCollision);
+    script_binding_class.bind("setCollisionSolid", &ScriptableObject::setCollisionSolid);
+    script_binding_class.bind("setCollisionPlatform", &ScriptableObject::setCollisionPlatform);
     script_binding_class.bind("onUpdate", onUpdateCallback);
     script_binding_class.bind("onUse", onUseCallback);
     script_binding_class.bind("onTouch", onTouchCallback);
