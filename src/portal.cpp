@@ -20,7 +20,7 @@ Portal::Portal(sp::P<sp::Node> parent, sp::Vector2d position, sp::string target)
 
 void Portal::onFixedUpdate()
 {
-    sp::P<AreaScene> scene = sp::Scene::get("AREA");
+    sp::P<AreaScene> scene = getScene();
     
     render_data.color = sp::HsvColor(color_cycle, 70.0, 100.0);
     

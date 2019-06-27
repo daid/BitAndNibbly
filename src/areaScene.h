@@ -9,7 +9,7 @@ class Player;
 class AreaScene : public sp::Scene
 {
 public:
-    AreaScene();
+    AreaScene(int player_nr);
 
     void load(sp::string name);
     void reload();
@@ -18,6 +18,7 @@ public:
     
     sp::P<Player> player;
 private:
+    int player_nr;
     sp::string load_target;
     sp::string current_area_name;
     sp::string previous_area_name;

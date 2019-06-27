@@ -34,9 +34,16 @@ static sp::P<SpeechBubble> luaShowSpeechBubble(sp::P<sp::Node> target, sp::strin
     return new SpeechBubble(target, text);
 }
 
-static sp::P<ScriptableObject> luaAddObject(sp::Vector2d position)
+static int luaAddObject(lua_State* lua)
 {
-    return new ScriptableObject(sp::Scene::get("AREA")->getRoot(), position, sp::Vector2d(1, 1));
+    lua_getfield(lua, lua_upvalueindex(1), "player");
+    lua_getfield(lua, -1, "__ptr");
+    sp::Node* player = dynamic_cast<sp::Node*>(static_cast<sp::ScriptBindingObject*>(lua_touserdata(lua, -1)));
+    lua_pop(lua, 2);
+
+    sp::Vector2d position = sp::script::convertFromLua(lua, sp::script::typeIdentifier<sp::Vector2d>{}, 1);
+    sp::P<ScriptableObject> obj = new ScriptableObject(player->getParent(), position, sp::Vector2d(1, 1));
+    return sp::script::pushToLua(lua, obj);
 }
 
 static sp::P<ScriptableParticleEmitter> luaAddParticleEmitter(sp::P<sp::Node> target)
@@ -57,9 +64,13 @@ static int luaGetGlobal(sp::string name)
     return lua_global_values[name];
 }
 
-AreaScene::AreaScene()
-: sp::Scene("AREA")
+AreaScene::AreaScene(int player_nr)
+: sp::Scene("AREA" + sp::string(player_nr)), player_nr(player_nr)
 {
+    sp::Camera* camera = new sp::Camera(getRoot());
+    setDefaultCamera(camera);
+    camera->setOrtographic(8.0);
+    camera->setPosition(sp::Vector2d(4, 4));
 }
 
 void AreaScene::load(sp::string name)
@@ -102,7 +113,10 @@ void AreaScene::_load(sp::string name)
     
     script.destroy();
     for(sp::P<sp::Node> node : getRoot()->getChildren())
-        node.destroy();
+    {
+        if (node != getCamera())
+            node.destroy();
+    }
 
     script = new sp::script::Environment();
 
@@ -113,11 +127,6 @@ void AreaScene::_load(sp::string name)
     background->render_data.mesh = sp::MeshData::createQuad(sp::Vector2f(16, 16));
     background->render_data.order = 10;
     background->setPosition(sp::Vector2d(4, 4));
-
-    sp::Camera* camera = new sp::Camera(getRoot());
-    setDefaultCamera(camera);
-    camera->setOrtographic(8.0);
-    camera->setPosition(sp::Vector2d(4, 4));
 
     sp::P<sp::Tilemap> tilemap = new sp::Tilemap(getRoot(), "tiles.png", 1.0, 1.0, 32, 32);
     tilemap->setTilemapSpacingMargin(1.0f / 16.0f + 0.01, 0.0f);
@@ -203,8 +212,8 @@ void AreaScene::_load(sp::string name)
     shape.loops = {{ {0, 0}, {8, 0}, {8, 10}, {0, 10} }};
     edge->setCollisionShape(shape);
     
-    player = new Player(getRoot(), start_position, player_controllers[0]);
-    
+    player = new Player(getRoot(), start_position, player_controllers[player_nr]);
+
     script->setGlobal("player", player);
     
     script->setGlobal("yield", luaYield);

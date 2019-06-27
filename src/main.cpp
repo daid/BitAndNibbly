@@ -34,6 +34,42 @@
 
 sp::P<sp::Window> window;
 
+class SceneManager : public sp::Updatable
+{
+public:
+    SceneManager(int player_count)
+    {
+        for(int n=0; n<player_count; n++)
+        {
+            render_pass[n] = new sp::BasicNodeRenderPass();
+        
+            sp::P<sp::SceneGraphicsLayer> scene_layer = new sp::SceneGraphicsLayer(1);
+            scene_layer->addRenderPass(render_pass[n]);
+#ifdef DEBUG
+            scene_layer->addRenderPass(new sp::CollisionRenderPass());
+#endif
+            if (n == 0)
+                scene_layer->setViewport(sp::Rect2d(0, 0, 0.5, 1.0));
+            else
+                scene_layer->setViewport(sp::Rect2d(0.5, 0, 0.5, 1.0));
+            window->addLayer(scene_layer);
+
+            scenes[n] = new AreaScene(n);
+            //scenes[n]->load("home_inside");
+            scenes[n]->load("houc1");
+
+            render_pass[n]->addCamera(scenes[n]->getCamera());
+        }
+    }
+    
+    virtual void onUpdate(float delta)
+    {
+    }
+    
+    sp::P<sp::BasicNodeRenderPass> render_pass[2];
+    sp::P<AreaScene> scenes[2];
+};
+
 
 int main(int argc, char** argv)
 {
@@ -56,16 +92,8 @@ int main(int argc, char** argv)
     sp::gui::Theme::loadTheme("default", "gui/theme/basic.theme.txt");
     //new sp::gui::Scene(sp::Vector2d(640, 480), sp::gui::Scene::Direction::Horizontal);
 
-    sp::P<sp::SceneGraphicsLayer> scene_layer = new sp::SceneGraphicsLayer(1);
-    scene_layer->addRenderPass(new sp::BasicNodeRenderPass());
-#ifdef DEBUG
-    scene_layer->addRenderPass(new sp::CollisionRenderPass());
-#endif
-    window->addLayer(scene_layer);
-
-    sp::P<AreaScene> scene = new AreaScene();
-    //scene->load("home_inside");
-    scene->load("houc1");
+    SceneManager scene_manager{2};
+    
     engine->run();
     
     return 0;

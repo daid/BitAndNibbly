@@ -11,7 +11,7 @@ Controls::Controls(int index)
 , left("left" + sp::string(index))
 , right("right" + sp::string(index))
 , jump("jump_" + sp::string(index))
-, fire2("fire2_" + sp::string(index))
+, use("use_" + sp::string(index))
 , fire3("fire3_" + sp::string(index))
 , unknown3("unknown3_" + sp::string(index))
 , unknown4("unknown4_" + sp::string(index))
@@ -26,7 +26,7 @@ Controls::Controls(int index)
         right.setKeys("right", "keypad 6");
         
         jump.setKey("space");
-        fire2.setKey("z");
+        use.setKey("z");
         fire3.setKey("x");
         unknown3.setKey("c");
         unknown4.setKey("v");
@@ -43,7 +43,7 @@ Controls::Controls(int index)
         right.setKey("d");
         
         jump.setKey("q");
-        fire2.setKey("e");
+        use.setKey("e");
         fire3.setKey("r");
         unknown3.setKey("f");
         unknown4.setKey("t");

@@ -8,6 +8,6 @@ Door::Door(sp::P<sp::Node> parent, sp::Vector2d position, sp::Vector2d size, sp:
 
 void Door::onUse(sp::P<Player> player)
 {
-    sp::P<AreaScene> scene = sp::Scene::get("AREA");
+    sp::P<AreaScene> scene = getScene();
     scene->load(target);
 }

@@ -22,6 +22,6 @@ void Warp::onCollision(sp::CollisionInfo& info)
     if (!player)
         return;
     
-    sp::P<AreaScene> scene = sp::Scene::get("AREA");
+    sp::P<AreaScene> scene = getScene();
     scene->load(target);
 }

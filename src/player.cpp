@@ -69,7 +69,7 @@ void Player::onFixedUpdate()
         });
     }
 
-    if (alive && controls.up.getDown() && on_ground && !script_coroutine)
+    if (alive && (controls.up.getDown() || controls.use.getDown()) && on_ground && !script_coroutine)
     {
         getScene()->queryCollision(getPosition2D() - sp::Vector2d(0, 0.4), [this](sp::P<sp::Node> node)
         {
@@ -97,7 +97,7 @@ void Player::onFixedUpdate()
         }
         else
         {
-            sp::P<AreaScene> scene = sp::Scene::get("AREA");
+            sp::P<AreaScene> scene = getScene();
             scene->reload();
         }
     }

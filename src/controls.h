@@ -19,7 +19,7 @@ public:
     sp::io::Keybinding right;
 
     sp::io::Keybinding jump;
-    sp::io::Keybinding fire2;
+    sp::io::Keybinding use;
     sp::io::Keybinding fire3;
     sp::io::Keybinding unknown3;
     sp::io::Keybinding unknown4;
