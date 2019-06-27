@@ -11,10 +11,10 @@
 #include <sp2/engine.h>
 
 
-Player::Player(sp::P<sp::Node> parent, sp::Vector2d position, Controls& controls)
+Player::Player(sp::P<sp::Node> parent, sp::Vector2d position, int player_nr, Controls& controls)
 : sp::Node(parent), controls(controls)
 {
-    setAnimation(sp::SpriteAnimation::load("player.txt"));
+    setAnimation(sp::SpriteAnimation::load("player" + sp::string(player_nr+1) + ".txt"));
     
     sp::collision::Box2D shape(0.6, 0.6, 0, -0.2);
     shape.fixed_rotation = true;

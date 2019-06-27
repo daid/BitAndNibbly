@@ -10,7 +10,7 @@ class ClimbZone;
 class Player : public sp::Node
 {
 public:
-    Player(sp::P<sp::Node> parent, sp::Vector2d position, Controls& controls);
+    Player(sp::P<sp::Node> parent, sp::Vector2d position, int player_nr, Controls& controls);
     
     virtual void onFixedUpdate() override;
     virtual void onCollision(sp::CollisionInfo& info) override;

@@ -212,7 +212,7 @@ void AreaScene::_load(sp::string name)
     shape.loops = {{ {0, 0}, {8, 0}, {8, 10}, {0, 10} }};
     edge->setCollisionShape(shape);
     
-    player = new Player(getRoot(), start_position, player_controllers[player_nr]);
+    player = new Player(getRoot(), start_position, player_nr, player_controllers[player_nr]);
 
     script->setGlobal("player", player);
     

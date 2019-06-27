@@ -66,6 +66,42 @@
                  "width":16,
                  "x":48,
                  "y":128
+                }, 
+                {
+                 "gid":377,
+                 "height":16,
+                 "id":83,
+                 "name":"=PORTAL",
+                 "rotation":0,
+                 "type":"houc1",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":128
+                }, 
+                {
+                 "gid":377,
+                 "height":16,
+                 "id":84,
+                 "name":"=PORTAL",
+                 "rotation":0,
+                 "type":"houc2",
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":128
+                }, 
+                {
+                 "gid":377,
+                 "height":16,
+                 "id":85,
+                 "name":"=PORTAL",
+                 "rotation":0,
+                 "type":"houc3",
+                 "visible":true,
+                 "width":16,
+                 "x":112,
+                 "y":128
                 }],
          "opacity":0.5,
          "type":"objectgroup",
@@ -74,7 +110,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":83,
+ "nextobjectid":86,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
