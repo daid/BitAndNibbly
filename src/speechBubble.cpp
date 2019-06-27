@@ -12,7 +12,7 @@ SpeechBubble::SpeechBubble(sp::P<sp::Node> parent, sp::string text)
     render_data.shader = sp::Shader::get("internal:basic.shader");
     render_data.texture = sp::texture_manager.get("speech.png");
     render_data.color = sp::Color(0.9, 0.9, 0.9);
-    render_data.order = 14;
+    render_data.order = 9;
 
     sp::Font* font = sp::font_manager.get("gui/theme/Boxy-Bold.ttf");
     sp::Font::PreparedFontString prepared = font->prepare(text, 32, 0.4, sp::Vector2d(0, 0), sp::Alignment::BottomLeft);
@@ -49,11 +49,31 @@ SpeechBubble::SpeechBubble(sp::P<sp::Node> parent, sp::string text)
 
 void SpeechBubble::onFixedUpdate()
 {
+    //Try to position the box with text towards the center
     sp::Vector2d position = getGlobalPosition2D();
     sp::Vector2d offset(4.0 - position.x - size.x / 2.0, 0.5);
     
+    //Limit so the box is above the speech arrow
     offset.x = std::min(-0.5, offset.x);
     offset.x = std::max(-size.x+0.5, offset.x);
+    
+    //Limit so the box is not outside the view space
+    offset.x = std::max(offset.x, 0.2 - position.x);
+    offset.x = std::min(offset.x, 7.8 - position.x - size.x);
+
+    if (position.y + size.y > 8.0 - 0.5)
+    {
+        offset.x = -offset.x;
+        offset.y += size.y;
+        setRotation(180);
+        background_node->setRotation(-180);
+    }
+    else
+    {
+        setRotation(0);
+        background_node->setRotation(0);
+    }
+    
     background_node->setPosition(offset);
 }
 
