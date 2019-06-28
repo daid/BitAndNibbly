@@ -1,0 +1,5 @@
+sign.onUse(function(player)
+    message(sign, "This is just an\nearly alpha.")
+    message(sign, "Maybe there will\nbe more some day.")
+    message(sign, "Signed:\n-Daid")
+end)
