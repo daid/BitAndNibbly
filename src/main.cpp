@@ -62,7 +62,7 @@ public:
         }
     }
     
-    virtual void onUpdate(float delta)
+    virtual void onUpdate(float delta) override
     {
     }
     

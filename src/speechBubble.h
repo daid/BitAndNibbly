@@ -8,7 +8,7 @@ class SpeechBubble : public sp::Node
 public:
     SpeechBubble(sp::P<sp::Node> parent, sp::string text);
 
-    virtual void onFixedUpdate();
+    virtual void onFixedUpdate() override;
     virtual void onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class) override;
 private:
     void destroy();
