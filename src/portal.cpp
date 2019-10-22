@@ -14,6 +14,7 @@ Portal::Portal(sp::P<sp::Node> parent, sp::Vector2d position, sp::string target)
     animationPlay("Closed");
 
     particle_emitter = new sp::ParticleEmitter(this);
+    particle_emitter->addEffector<sp::ParticleEmitter::SizeEffector>(0.1, 0.0);
     
     onFixedUpdate();
 }
@@ -53,15 +54,10 @@ void Portal::onUpdate(float delta)
 
         parameters.position.x = sp::random(-0.4, 0.4);
         parameters.position.y = -parameters.position.x;
-        parameters.acceleration = sp::Vector3f(1, 1, 0);
+        parameters.velocity = sp::Vector3f(1, 1, 0) * 0.1f;
         if (sp::random(0, 100) < 50)
-            parameters.acceleration = -parameters.acceleration;
-        parameters.velocity = parameters.acceleration * 0.1f;
-        parameters.start_size = 0.1;
-        parameters.end_size = 0.0;
-        parameters.start_color = render_data.color;
-        parameters.end_color = parameters.start_color;
-        parameters.end_color.a = 0.0;
+            parameters.velocity = -parameters.velocity;
+        parameters.color = render_data.color;
         parameters.lifetime = 1.0;
 
         particle_emitter->emit(parameters);

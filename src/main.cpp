@@ -22,6 +22,7 @@
 #include <sp2/io/keybinding.h>
 #include <sp2/io/http/server.h>
 #include <sp2/tweak.h>
+#include <sp2/io/virtualTouchKeys.h>
 
 #include <json11/json11.hpp>
 
@@ -48,10 +49,13 @@ public:
 #ifdef DEBUG
             scene_layer->addRenderPass(new sp::CollisionRenderPass());
 #endif
-            if (n == 0)
-                scene_layer->setViewport(sp::Rect2d(0, 0, 0.5, 1.0));
-            else
-                scene_layer->setViewport(sp::Rect2d(0.5, 0, 0.5, 1.0));
+            if (player_count == 2)
+            {
+                if (n == 0)
+                    scene_layer->setViewport(sp::Rect2d(0, 0, 0.5, 1.0));
+                else
+                    scene_layer->setViewport(sp::Rect2d(0.5, 0, 0.5, 1.0));
+            }
             window->addLayer(scene_layer);
 
             scenes[n] = new AreaScene(n);
@@ -60,6 +64,15 @@ public:
 
             render_pass[n]->addCamera(scenes[n]->getCamera());
         }
+
+#ifdef ANDROID        
+        sp::io::VirtualTouchKeyLayer* virtual_keys = new sp::io::VirtualTouchKeyLayer(50);
+        virtual_keys->addButton(sp::Rect2f(sp::Vector2f(-1, -1), sp::Vector2f(1, 1)), player_controllers[0].use);
+        virtual_keys->addButton(sp::Rect2f(sp::Vector2f(0, -1), sp::Vector2f(1, 1)), player_controllers[0].jump);
+        virtual_keys->addButton(sp::Rect2f(sp::Vector2f(-1, 0), sp::Vector2f(1, 1)), player_controllers[0].left);
+        virtual_keys->addButton(sp::Rect2f(sp::Vector2f(0, 0), sp::Vector2f(1, 1)), player_controllers[0].right);
+        window->addLayer(virtual_keys);
+#endif
     }
     
     virtual void onUpdate(float delta) override
@@ -92,7 +105,7 @@ int main(int argc, char** argv)
     sp::gui::Theme::loadTheme("default", "gui/theme/basic.theme.txt");
     //new sp::gui::Scene(sp::Vector2d(640, 480), sp::gui::Scene::Direction::Horizontal);
 
-    SceneManager scene_manager{2};
+    SceneManager scene_manager{1};
     
     engine->run();
     

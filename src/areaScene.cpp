@@ -37,7 +37,8 @@ static sp::P<SpeechBubble> luaShowSpeechBubble(sp::P<sp::Node> target, sp::strin
 static int luaAddObject(lua_State* lua)
 {
     lua_getfield(lua, lua_upvalueindex(1), "player");
-    lua_getfield(lua, -1, "__ptr");
+    lua_getmetatable(lua, -1);
+    lua_getfield(lua, -1, "object_ptr");
     sp::Node* player = dynamic_cast<sp::Node*>(static_cast<sp::ScriptBindingObject*>(lua_touserdata(lua, -1)));
     lua_pop(lua, 2);
 

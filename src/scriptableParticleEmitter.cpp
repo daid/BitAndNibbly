@@ -23,12 +23,9 @@ void ScriptableParticleEmitter::onUpdate(float delta)
         parameters.position.x = sp::random(-area.x, area.x);
         parameters.position.y = sp::random(-area.y, area.y);
         //parameters.velocity;
-        parameters.acceleration.y = 2.0;
-        parameters.start_size = 0.1;
-        parameters.end_size = 0.0;
-        parameters.start_color = color;
-        parameters.end_color = parameters.start_color;
-        parameters.end_color.a = 0.0;
+        //parameters.acceleration.y = 2.0;
+        parameters.size = 0.1;
+        parameters.color = color;
         parameters.lifetime = 1.0;
 
         emit(parameters);
