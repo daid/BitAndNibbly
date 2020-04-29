@@ -204,7 +204,7 @@ bool Player::anyKeyPressed()
     return controls.jump.getDown();
 }
 
-void Player::onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class)
+void Player::onRegisterScriptBindings(sp::script::BindingClass& script_binding_class)
 {
     sp::Node::onRegisterScriptBindings(script_binding_class);
     

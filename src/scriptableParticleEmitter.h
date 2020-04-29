@@ -9,7 +9,7 @@ public:
     ScriptableParticleEmitter(sp::P<sp::Node> parent);
     
     virtual void onUpdate(float delta) override;
-    virtual void onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class) override;
+    virtual void onRegisterScriptBindings(sp::script::BindingClass& script_binding_class) override;
     
 private:
     float frequency = 3.0;

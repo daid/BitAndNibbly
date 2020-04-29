@@ -38,7 +38,7 @@ void ScriptableParticleEmitter::destroy()
     delete this;
 }
 
-void ScriptableParticleEmitter::onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class)
+void ScriptableParticleEmitter::onRegisterScriptBindings(sp::script::BindingClass& script_binding_class)
 {
     sp::ParticleEmitter::onRegisterScriptBindings(script_binding_class);
     

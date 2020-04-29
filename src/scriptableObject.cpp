@@ -79,7 +79,7 @@ void ScriptableObject::destroy()
     delete this;
 }
 
-void ScriptableObject::onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class)
+void ScriptableObject::onRegisterScriptBindings(sp::script::BindingClass& script_binding_class)
 {
     Interactable::onRegisterScriptBindings(script_binding_class);
     

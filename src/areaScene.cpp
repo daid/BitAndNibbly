@@ -39,7 +39,7 @@ static int luaAddObject(lua_State* lua)
     lua_getfield(lua, lua_upvalueindex(1), "player");
     lua_getmetatable(lua, -1);
     lua_getfield(lua, -1, "object_ptr");
-    sp::Node* player = dynamic_cast<sp::Node*>(static_cast<sp::ScriptBindingObject*>(lua_touserdata(lua, -1)));
+    sp::Node* player = dynamic_cast<sp::Node*>(static_cast<sp::script::BindingObject*>(lua_touserdata(lua, -1)));
     lua_pop(lua, 2);
 
     sp::Vector2d position = sp::script::convertFromLua(lua, sp::script::typeIdentifier<sp::Vector2d>{}, 1);
@@ -162,37 +162,37 @@ void AreaScene::_load(sp::string name)
         
         for(auto& object : layer["objects"].array_items())
         {
-            sp::string name = object["name"].string_value();
+            sp::string obj_name = object["name"].string_value();
             double rotation = -object["rotation"].number_value();
             sp::Vector2d position(object["x"].number_value() / 16.0, 8.0 - object["y"].number_value() / 16.0);
             sp::Vector2d size(object["width"].number_value() / 16.0, object["height"].number_value() / 16.0);
             position += (size / 2.0).rotate(rotation);
             
-            if (name == "=LADDER")
+            if (obj_name == "=LADDER")
             {
                 new Ladder(getRoot(), position, size);
             }
-            else if (name == "=CLIMB")
+            else if (obj_name == "=CLIMB")
             {
                 new ClimbZone(getRoot(), position, size);
             }
-            else if (name == "=DOOR")
+            else if (obj_name == "=DOOR")
             {
                 new Door(getRoot(), position, size, object["type"].string_value());
                 if (previous_area_name == object["type"].string_value())
                     start_position = position;
             }
-            else if (name == "=PORTAL")
+            else if (obj_name == "=PORTAL")
             {
                 new Portal(getRoot(), position, object["type"].string_value());
                 if (previous_area_name == object["type"].string_value())
                     start_position = position;
             }
-            else if (name == "=WARP")
+            else if (obj_name == "=WARP")
             {
                 new Warp(getRoot(), position, size, object["type"].string_value());
             }
-            else if (name == "=ENTRY")
+            else if (obj_name == "=ENTRY")
             {
                 if (previous_area_name == object["type"].string_value())
                     start_position = position;

@@ -82,7 +82,7 @@ void SpeechBubble::destroy()
     delete this;
 }
 
-void SpeechBubble::onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class)
+void SpeechBubble::onRegisterScriptBindings(sp::script::BindingClass& script_binding_class)
 {
     sp::Node::onRegisterScriptBindings(script_binding_class);
     

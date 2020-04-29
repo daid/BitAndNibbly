@@ -14,7 +14,7 @@ public:
     
     virtual void onFixedUpdate() override;
     virtual void onCollision(sp::CollisionInfo& info) override;
-    void onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class) override;
+    void onRegisterScriptBindings(sp::script::BindingClass& script_binding_class) override;
     
     sp::script::CoroutinePtr script_coroutine;
 private:

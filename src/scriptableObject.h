@@ -13,7 +13,7 @@ public:
     virtual void onFixedUpdate() override;
     virtual void onUse(sp::P<Player> player) override;
     virtual void onCollision(sp::CollisionInfo& info) override;
-    virtual void onRegisterScriptBindings(sp::ScriptBindingClass& script_binding_class) override;
+    virtual void onRegisterScriptBindings(sp::script::BindingClass& script_binding_class) override;
 private:
     void setCollision(sp::Vector2d size, sp::Vector2d offset);
     void setCollisionSolid(sp::Vector2d size, sp::Vector2d offset);
