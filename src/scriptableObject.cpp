@@ -54,15 +54,15 @@ void ScriptableObject::setCollisionPlatform(float width, sp::Vector2f offset)
 
 void ScriptableObject::onFixedUpdate()
 {
-    if (!update_coroutine || !update_coroutine->resume())
+    if (!update_coroutine || !update_coroutine->resume().value())
     {
-        update_coroutine = onUpdateCallback.callCoroutine();
+        update_coroutine = onUpdateCallback.callCoroutine().value();
     }
 }
 
 void ScriptableObject::onUse(sp::P<Player> player)
 {
-    player->script_coroutine = onUseCallback.callCoroutine(player);
+    player->script_coroutine = onUseCallback.callCoroutine(player).value();
 }
 
 void ScriptableObject::onCollision(sp::CollisionInfo& info)
@@ -70,7 +70,7 @@ void ScriptableObject::onCollision(sp::CollisionInfo& info)
     sp::P<Player> player = info.other;
     if (player && !player->script_coroutine)
     {
-        player->script_coroutine = onTouchCallback.callCoroutine(player);
+        player->script_coroutine = onTouchCallback.callCoroutine(player).value();
     }
 }
 

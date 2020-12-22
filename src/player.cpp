@@ -42,7 +42,7 @@ void Player::onFixedUpdate()
     if (script_coroutine)
     {
         movement_request = sp::Vector2d(0, 0);
-        if (!script_coroutine->resume())
+        if (!script_coroutine->resume().value())
         {
             script_coroutine = nullptr;
             return;
