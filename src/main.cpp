@@ -24,7 +24,7 @@
 #include <sp2/tweak.h>
 #include <sp2/io/virtualTouchKeys.h>
 
-#include <json11/json11.hpp>
+#include <nlohmann/json.hpp>
 
 #include "areaScene.h"
 #include "controls.h"

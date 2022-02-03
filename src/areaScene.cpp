@@ -19,7 +19,7 @@
 #include <sp2/engine.h>
 #include <sp2/tweak.h>
 
-#include <json11/json11.hpp>
+#include <nlohmann/json.hpp>
 
 
 static int luaYield(lua_State* lua)
@@ -104,7 +104,7 @@ void AreaScene::_load(sp::string name)
         return;
     }
     std::string err;
-    json11::Json json = json11::Json::parse(stream->readAll(), err);
+    auto json = nlohmann::json::parse(stream->readAll());
 
     if (current_area_name != name)
     {
@@ -135,21 +135,21 @@ void AreaScene::_load(sp::string name)
 
     sp::Vector2d start_position(4, 8.0);
     
-    for(auto& layer : json["layers"].array_items())
+    for(auto& layer : json["layers"])
     {
         sp::Tilemap::Collision collision = sp::Tilemap::Collision::Open;
-        if (layer["name"].string_value() == "Solids")
+        if (layer["name"] == "Solids")
             collision = sp::Tilemap::Collision::Solid;
-        if (layer["name"].string_value() == "Platforms")
+        if (layer["name"] == "Platforms")
             collision = sp::Tilemap::Collision::Platform;
         auto& data = layer["data"];
-        int w=layer["width"].int_value();
-        int h=layer["height"].int_value();
+        int w=layer["width"];
+        int h=layer["height"];
         for(int y=0;y<h;y++)
         {
             for(int x=0;x<w;x++)
             {
-                long long idx = data[x + y * w].number_value();
+                long long idx = data[x + y * w];
                 int tile = (idx & 0xffff) - 1;
                 if (idx & 0x80000000)
                     tile |= sp::Tilemap::flip_horizontal;
@@ -160,12 +160,16 @@ void AreaScene::_load(sp::string name)
             }
         }
         
-        for(auto& object : layer["objects"].array_items())
+        for(const auto& object : layer["objects"])
         {
-            sp::string obj_name = object["name"].string_value();
-            double rotation = -object["rotation"].number_value();
-            sp::Vector2d position(object["x"].number_value() / 16.0, 8.0 - object["y"].number_value() / 16.0);
-            sp::Vector2d size(object["width"].number_value() / 16.0, object["height"].number_value() / 16.0);
+            sp::string obj_name = object["name"];
+            double rotation = -double(object["rotation"]);
+            double px = object["x"];
+            double py = object["y"];
+            double ow = object["width"];
+            double oh = object["height"];
+            sp::Vector2d position(px / 16.0, 8.0 - py / 16.0);
+            sp::Vector2d size(ow / 16.0, oh / 16.0);
             position += (size / 2.0).rotate(rotation);
             
             if (obj_name == "=LADDER")
@@ -178,30 +182,30 @@ void AreaScene::_load(sp::string name)
             }
             else if (obj_name == "=DOOR")
             {
-                new Door(getRoot(), position, size, object["type"].string_value());
-                if (previous_area_name == object["type"].string_value())
+                new Door(getRoot(), position, size, object["type"]);
+                if (previous_area_name == object["type"])
                     start_position = position;
             }
             else if (obj_name == "=PORTAL")
             {
-                new Portal(getRoot(), position, object["type"].string_value());
-                if (previous_area_name == object["type"].string_value())
+                new Portal(getRoot(), position, object["type"]);
+                if (previous_area_name == object["type"])
                     start_position = position;
             }
             else if (obj_name == "=WARP")
             {
-                new Warp(getRoot(), position, size, object["type"].string_value());
+                new Warp(getRoot(), position, size, object["type"]);
             }
             else if (obj_name == "=ENTRY")
             {
-                if (previous_area_name == object["type"].string_value())
+                if (previous_area_name == object["type"])
                     start_position = position;
             }
             else
             {
                 sp::P<ScriptableObject> so = new ScriptableObject(getRoot(), position, size);
                 so->setRotation(rotation);
-                so->setTile(object["gid"].int_value() - 1);
+                so->setTile(int(object["gid"]) - 1);
                 script->setGlobal(name, so);
             }
         }
