@@ -156,7 +156,7 @@ void AreaScene::_load(sp::string name)
                 if (idx & 0x40000000)
                     tile |= sp::Tilemap::flip_vertical;
                 if (tile > -1)
-                    tilemap->setTile(x, h-1-y, tile, collision);
+                    tilemap->setTile({x, h-1-y}, tile, collision);
             }
         }
         
